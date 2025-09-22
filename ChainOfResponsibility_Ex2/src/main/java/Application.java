@@ -2,10 +2,10 @@ import Handler.*;
 
 public class Application {
     public static EmailHandler getEmailHandler(){
-        EmailHandler newLocHandler = new NewLocHandler(null);
-        EmailHandler complaintHandler = new ComplaintHandler(newLocHandler);
-        EmailHandler fanHandler = new FanHandler(complaintHandler);
-        EmailHandler spamHandler = new SpamHandler(fanHandler);
+        EmailHandler newLocHandler = new NewLocHandler(null, EmailHandler.newLocStatus);
+        EmailHandler complaintHandler = new ComplaintHandler(newLocHandler, EmailHandler.complaintStatus);
+        EmailHandler fanHandler = new FanHandler(complaintHandler, EmailHandler.fanStatus);
+        EmailHandler spamHandler = new SpamHandler(fanHandler, EmailHandler.spamStatus);
 
         return spamHandler;
     }

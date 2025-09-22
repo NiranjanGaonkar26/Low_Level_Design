@@ -2,15 +2,29 @@ package Handler;
 
 public abstract class EmailHandler {
 
-    protected EmailHandler successor;
-    static final String spamStatus = "SPAM";
-    static final String complaintStatus = "COMPLAINT";
-    static final String fanStatus = "FAN";
-    static final String newLocStatus = "NEWLOC";
+    public static final String spamStatus = "SPAM";
+    public static final String complaintStatus = "COMPLAINT";
+    public static final String fanStatus = "FAN";
+    public static final String newLocStatus = "NEWLOC";
 
-    public EmailHandler(EmailHandler successor) {
+    protected EmailHandler successor;
+    protected String emailStatus;
+
+    public EmailHandler(EmailHandler successor, String emailStatus) {
         this.successor = successor;
+        this.emailStatus = emailStatus;
     }
 
-    abstract public void handleEmailRequest(String status, String msg);
+    public void handleEmailRequest(String status, String msg){
+        if(this.emailStatus.equals(status)){
+            write(msg);
+        }
+        else{
+            if(this.successor != null){
+                successor.handleEmailRequest(status, msg);
+            }
+        }
+    }
+
+    abstract void write(String msg);
 }
